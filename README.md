@@ -1,6 +1,6 @@
 # Maglev-Train: Study of the Lateral Stability of a Maglev Train
 
-This repository presents the research project conducted during the PHY204 Classical Electrodynamics course at École Polytechnique (Semester 4, Spring 2025). It investigates and compares the lateral stability mechanisms of two magnetic levitation train systems: **Electromagnetic Suspension (EMS)** and **Electrodynamic Suspension (EDS)**.
+This repository presents the research project conducted during the PHY204 Classical Electrodynamics course at École Polytechnique (Semester 4, Spring 2025). It investigates and compares the lateral stability mechanisms of two magnetic levitation train systems: **Electromagnetic Suspension (EMS)** and **Electrodynamic Suspension (EDS)**. For the report, see the Maglev___Stability file.
 
 ## 👨‍🔬 Project Team
 
