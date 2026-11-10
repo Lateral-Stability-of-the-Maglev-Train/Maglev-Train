@@ -1,7 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from pathlib import Path
+
+FIG_DIR = Path(__file__).resolve().parent.parent / "figures"
+FIG_DIR.mkdir(exist_ok=True)
 from scipy.fft import fft, fftfreq
-from scipy.integrate import cumtrapz
+from scipy.integrate import cumulative_trapezoid as cumtrapz
 
 # Constants
 mu0 = 4 * np.pi * 1e-7
@@ -78,6 +82,7 @@ plt.xlabel("Time (s)")
 plt.ylabel("Current (A)")
 plt.grid(True)
 plt.tight_layout()
+plt.savefig(FIG_DIR / "eds_induced_current.png", dpi=150, bbox_inches="tight")
 plt.show()
 
 # Compute potential energy as time-averaged dipole interaction
@@ -96,4 +101,26 @@ def compute_energy(y_disp=0.0):
                         U_t[i] += -np.dot(Mp, B)
     return U_t
 
-U_t = compu_
+# Time-averaged potential energy as a function of the lateral offset y
+def time_averaged_energy(y_disp):
+    global y, current
+    y = y_disp                         # r_vector() reads the global lateral offset
+    flux_y = compute_flux()
+    current = -np.gradient(flux_y, dt) / RE
+    return compute_energy().mean()
+
+
+y_grid = np.linspace(-0.3, 0.3, 25)
+U_avg = np.array([time_averaged_energy(yy) for yy in y_grid])
+y = 0.0
+
+plt.figure(figsize=(8, 4))
+plt.plot(y_grid, U_avg, marker="o", ms=3)
+plt.axvline(0, color="gray", linestyle="--")
+plt.title("Time-averaged potential energy vs lateral displacement (EDS)")
+plt.xlabel("Lateral displacement y (m)")
+plt.ylabel(r"$\langle U \rangle$ (J)")
+plt.grid(True)
+plt.tight_layout()
+plt.savefig(FIG_DIR / "eds_potential_energy.png", dpi=150, bbox_inches="tight")
+plt.show()

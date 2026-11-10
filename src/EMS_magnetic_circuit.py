@@ -1,6 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import cumtrapz
+from pathlib import Path
+
+FIG_DIR = Path(__file__).resolve().parent.parent / "figures"
+FIG_DIR.mkdir(exist_ok=True)
+from scipy.integrate import cumulative_trapezoid as cumtrapz
 
 # Physical constants / parameters (example values)
 mu0 = 4 * np.pi * 1e-7  # Vacuum permeability [H/m]
@@ -58,4 +62,5 @@ plt.title('Potential energy vs. lateral displacement')
 plt.grid(True)
 
 plt.tight_layout()
+plt.savefig(FIG_DIR / "ems_magnetic_circuit.png", dpi=150, bbox_inches="tight")
 plt.show()
